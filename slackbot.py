@@ -13,7 +13,7 @@ AT_BOT = "<@" + BOT_ID + ">"
 START_TRIVIA = "trivia"
 ADD_QUESTION = "add"
 HELP = "help"
-questions_filename = 'test.txt'
+questions_filename = 'questions.txt'
 
 class TriviaBot():
 
