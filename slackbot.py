@@ -13,6 +13,7 @@ AT_BOT = "<@" + BOT_ID + ">"
 START_TRIVIA = "trivia"
 ADD_QUESTION = "add"
 HELP = "help"
+questions_filename = 'test.txt'
 
 class TriviaBot():
 
@@ -24,20 +25,19 @@ class TriviaBot():
         self.answers = {}
 
     def getQuestionList(self):
-        f = open("questions.txt", "r")
-        line = f.readline()
-        i = 0
-        while line:
-            self.questions.append(line)
-            self.answers[i] = f.readline()
+        with open(questions_filename, "r") as f:
             line = f.readline()
-            i += 1
+            i = 0
+            while line:
+                self.questions.append(line)
+                self.answers[i] = f.readline()
+                line = f.readline()
+                i += 1
 
     def writeQuestion(self, question, answer):
-        f = open("questions.txt", "a+")
-        f.write('\n'+question)
-        f.write('\n'+answer)
-        f.close()
+        with open(questions_filename, "a+") as f:
+            f.write('\n'+question.encode('utf8'))
+            f.write('\n'+answer.encode('utf8'))
 
     def getState(self):
         print("addingResponse = " ,self.addingResponse , " answeringQuestion = " ,self.answeringQuestion , "currentQuestion " , self.currentQuestion ," questions " , self.questions , "answers " , self.answers)
