@@ -32,10 +32,11 @@ class TriviaBot():
             self.answers[i] = f.readline()
             line = f.readline()
             i += 1
+
     def writeQuestion(self, question, answer):
         f = open("questions.txt", "a+")
-        f.write(question)
-        f.write(answer)
+        f.write('\n'+question)
+        f.write('\n'+answer)
         f.close()
 
     def getState(self):
@@ -62,7 +63,7 @@ class TriviaBot():
             returns back what it needs for clarification.
         """ 
         response = "Default response"           
-        print("handling command" + command)
+        print("handling command " + '\"' + command + '\"')
         if self.addingResponse:
             self.answers[len(self.questions)-1] = command # the last question added is associated with this answer
             self.addingResponse = False
@@ -99,7 +100,7 @@ def parse_slack_output(slack_rtm_output):
         for output in output_list:
             if output and 'text' in output and AT_BOT in output['text']:
                 # return text after the @ mention, whitespace removed
-                return output['text'].split(AT_BOT)[1].strip().lower(), \
+                return output['text'].split(AT_BOT)[1].strip(), \
                        output['channel']
     return None, None
 

@@ -21,4 +21,4 @@ Harrison Ford got sick so he wasn't up to the task of filming a long fight scene
 What did Slack do before pivoting into a chat client?
 Slack was meant to be a neverending online game. Budget constraints meant that the dev team had to spin off the chat client they had developed for the game into Slack today.
 Which year was UC Berkeley founded?
-1868what is the answer to life, the universe, and everything?42
+1868
