@@ -13,34 +13,40 @@ AT_BOT = "<@" + BOT_ID + ">"
 START_TRIVIA = "trivia"
 ADD_QUESTION = "add"
 HELP = "help"
-questions_filename = 'questions.txt'
+questions_path = 'questions.txt'
+
+class Question():
+    def __init__(self, question, answer, auxiliary_info):
+        self.question = question.strip()
+        self.answer = answer.strip()
+        self.aux = auxiliary_info.strip()
 
 class TriviaBot():
 
     def __init__(self):
         self.addingResponse = False
         self.answeringQuestion = False
-        self.currentQuestion = -1
+        self.currentQuestion = None
         self.questions = []
-        self.answers = {}
 
-    def getQuestionList(self):
-        with open(questions_filename, "r") as f:
+    def loadQuestionList(self):
+        with open(questions_path, "r") as f:
             line = f.readline()
             i = 0
             while line:
-                self.questions.append(line)
-                self.answers[i] = f.readline()
+                question = Question(line, f.readline(), f.readline())
+                self.questions.append(question)
                 line = f.readline()
                 i += 1
 
-    def writeQuestion(self, question, answer):
-        with open(questions_filename, "a+") as f:
-            f.write('\n'+question.encode('utf8'))
-            f.write('\n'+answer.encode('utf8'))
+    def writeQuestion(self, question):
+        with open(questions_path, "a+") as f:
+            f.write('\n'+question.question.encode('utf8'))
+            f.write('\n'+question.answer.encode('utf8'))
+            f.write('\n'+question.aux.encode('utf8'))
 
     def getState(self):
-        print("addingResponse = " ,self.addingResponse , " answeringQuestion = " ,self.answeringQuestion , "currentQuestion " , self.currentQuestion ," questions " , self.questions , "answers " , self.answers)
+        print("addingResponse = " ,self.addingResponse , " answeringQuestion = " ,self.answeringQuestion , "currentQuestion " , self.currentQuestion ," questions " , self.questions)
         return """
 
         Here's how to play the game:\n
@@ -53,8 +59,8 @@ class TriviaBot():
         if len(self.questions) == 0:
             return "I don't have any questions for you. Add some with the *add* command!"
         self.answeringQuestion = True
-        self.currentQuestion = random.randint(0, len(self.questions) - 1)
-        return self.questions[self.currentQuestion]
+        self.currentQuestion = self.questions[random.randint(0, len(self.questions) - 1)]
+        return self.currentQuestion.question
 
     def handle_command(self, command, channel):
         """
@@ -65,20 +71,20 @@ class TriviaBot():
         response = "Default response"           
         print("handling command " + '\"' + command + '\"')
         if self.addingResponse:
-            self.answers[len(self.questions)-1] = command # the last question added is associated with this answer
+            self.currentQuestion.answer = command # the last question added is associated with this answer
             self.addingResponse = False
-            response = "Ok, the answer to " + self.questions[-1] + " is " + command
-            self.writeQuestion(self.questions[-1], command)
+            response = "Ok, the answer to " + self.currentQuestion.question + " is " + command
+            self.writeQuestion(self.currentQuestion)
         elif self.answeringQuestion:
-            print(self.currentQuestion)
-            response = "If you answered " + self.answers[self.currentQuestion] + " then you're right! good job!"
+            print(self.currentQuestion.question)
+            response = "If you answered " + self.currentQuestion.answer + " then you're right! good job!"
             self.answeringQuestion = False
         else:
             if command.startswith(START_TRIVIA):
                 response = self.getTriviaQuestion()
             elif command.startswith(ADD_QUESTION):
                 question = command[len(ADD_QUESTION)+1:]
-                self.questions.append(question)
+                self.currentQuestion = Question(question, '', '')
                 self.addingResponse = True
                 response = "ok! added " + question + "\nNow add a response"
             elif command.startswith(HELP):
@@ -112,7 +118,7 @@ READ_WEBSOCKET_DELAY = 1 # 1 second delay between reading from firehose
 if slack_client.rtm_connect():
     print("TriviaBot connected and running!")
     triviabot = TriviaBot()
-    triviabot.getQuestionList()
+    triviabot.loadQuestionList()
     while True:
         command, channel = parse_slack_output(slack_client.rtm_read())
         if command and channel:

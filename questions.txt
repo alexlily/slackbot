@@ -1,24 +1,32 @@
-How much wood would a woodchuck chuck if a woodchuck could chuck wood? 
-42 woulds
 What was Mickey Mouse’s name before it was changed to Mickey?
 Mortimer
+
 What street does Spongebob Squarepants live on?
 Conch Street
+
 What does a catalytic converter do?
 It's an emissions control device in cars that converts more toxic compounds (carbon monoxide and unburned hydrocarbons) into less toxic compounds (carbon dioxide and water).
+
 Which land animal is the fastest runner over long distances?
 Human
+
 What recent scientific discovery was made following the detection of the collision of two black holes?
 Gravitational waves
+
 What was Gordon Ramsay's intended career path before he became a chef?
 Professional soccer player. He was on a trial period with a professional soccer team when he suffered an ACL tear, so he started developing his culinary interests.
+
 Name a doubly-landlocked country. A country is "landlocked" if it does not border an ocean or a sea. "Doubly-landlocked" means the country only borders "landlocked" countries.
 Liechtenstein or Uzbekistan are acceptable. Uzbekistan isn't doubly-landlocked if you consider the Caspian Sea as a sea instead of a lake.
+
 Which country owns the world’s largest island-in-a-lake-on-an-island-in-a-lake-on-an-island?
 Canada. Source: http://www.cntraveler.com/stories/2012-01-24/victoria-british-columbia-nunavut-unnamed-island-maphead-ken-jennings
+
 The following scene from "Indiana Jones" was originally supposed to be a long and choreographed fight scene. Why was it changed? https://www.youtube.com/watch?v=3I_Ds2ytz4o
 Harrison Ford got sick so he wasn't up to the task of filming a long fight scene. Rumor has it that he asked Steven Spielberg, "Can't I just shoot him?"
+
 What did Slack do before pivoting into a chat client?
 Slack was meant to be a neverending online game. Budget constraints meant that the dev team had to spin off the chat client they had developed for the game into Slack today.
+
 Which year was UC Berkeley founded?
 1868
