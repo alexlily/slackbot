@@ -21,11 +21,17 @@ class Question():
         self.answer = answer.strip()
         self.aux = auxiliary_info.strip()
 
+    def __str__(self):
+        return "Q: " + self.question + "\n" + \
+               "A: " + self.answer + "\n" + \
+               "Aux: " + self.aux
+
 class TriviaBot():
 
     def __init__(self):
         self.addingResponse = False
         self.answeringQuestion = False
+        self.addingAux = False
         self.currentQuestion = None
         self.questions = []
 
@@ -68,12 +74,17 @@ class TriviaBot():
             are valid commands. If so, then acts on the commands. If not,
             returns back what it needs for clarification.
         """ 
-        response = "Default response"           
+        response = "You're not using me properly. Try getting some help with @triviabot help"           
         print("handling command " + '\"' + command + '\"')
         if self.addingResponse:
             self.currentQuestion.answer = command # the last question added is associated with this answer
             self.addingResponse = False
-            response = "Ok, the answer to " + self.currentQuestion.question + " is " + command
+            self.addingAux = True
+            response = "Ok, the answer to " + self.currentQuestion.question + " is " + command + "\nNow add auxiliary info"
+        elif self.addingAux:
+            self.currentQuestion.aux = command
+            self.addingAux = False
+            response = "Saved question\n" + unicode(self.currentQuestion)
             self.writeQuestion(self.currentQuestion)
         elif self.answeringQuestion:
             print(self.currentQuestion.question)
