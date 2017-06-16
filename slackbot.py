@@ -77,7 +77,8 @@ class TriviaBot():
             self.writeQuestion(self.currentQuestion)
         elif self.answeringQuestion:
             print(self.currentQuestion.question)
-            response = "If you answered " + self.currentQuestion.answer + " then you're right! good job!"
+            response = "If you answered \"" + self.currentQuestion.answer + "\" then you're right! Good job!\n"
+            response = response + self.currentQuestion.aux
             self.answeringQuestion = False
         else:
             if command.startswith(START_TRIVIA):
