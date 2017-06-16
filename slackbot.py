@@ -39,7 +39,7 @@ class TriviaBot():
         with open(questions_path, "r") as f:
             line = f.readline()
             i = 0
-            while line:
+            while len(line.strip()) > 0:
                 question = Question(line, f.readline(), f.readline())
                 self.questions.append(question)
                 line = f.readline()
@@ -47,9 +47,9 @@ class TriviaBot():
 
     def writeQuestion(self, question):
         with open(questions_path, "a+") as f:
-            f.write('\n'+question.question.encode('utf8'))
-            f.write('\n'+question.answer.encode('utf8'))
-            f.write('\n'+question.aux.encode('utf8'))
+            f.write(question.question.encode('utf8')+'\n')
+            f.write(question.answer.encode('utf8')+'\n')
+            f.write(question.aux.encode('utf8')+'\n')
 
     def getState(self):
         print("addingResponse = " ,self.addingResponse , " answeringQuestion = " ,self.answeringQuestion , "currentQuestion " , self.currentQuestion ," questions " , self.questions)
@@ -85,12 +85,15 @@ class TriviaBot():
             self.currentQuestion.aux = command
             self.addingAux = False
             response = "Saved question\n" + unicode(self.currentQuestion)
+            self.questions.append(self.currentQuestion)
             self.writeQuestion(self.currentQuestion)
+            self.currentQuestion = None
         elif self.answeringQuestion:
             print(self.currentQuestion.question)
             response = "If you answered \"" + self.currentQuestion.answer + "\" then you're right! Good job!\n"
             response = response + self.currentQuestion.aux
             self.answeringQuestion = False
+            self.currentQuestion = None
         else:
             if command.startswith(START_TRIVIA):
                 response = self.getTriviaQuestion()
